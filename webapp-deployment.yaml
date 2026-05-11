@@ -22,6 +22,7 @@ spec:
       containers:
       - image: my-app-image
         name: my-app-image
+        imagePullPolicy: IfNotPresent
         resources: {}
 
 status: {}
