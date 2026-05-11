@@ -9,13 +9,11 @@ Where $hostname should be the hostname of the node.
 I'll make it a Service with 3 replicas.
 Then I'll add NGINX ingress.
 
-* Notes
-
-** Prerequisites
+* Prerequisites
 
 I'm running the cluster locally using ~minikube~.
 
-** Building the image
+* Building the image
 
 To build the image for the Python webapp, I can run this:
 #+begin_src bash :noeval
@@ -23,7 +21,7 @@ cd services/webapp
 make build
 #+end_src
 
-** Forcing K8s to repull the image
+* Forcing K8s to repull the image
 
 An image is pulled when the pod is created.
 
@@ -37,7 +35,7 @@ Alternatively, use the ~rollout~ command:
 kubectl rollout restart deployment/my-app-deployment
 #+end_src
 
-** Deploying
+* Deploying
 
 #+begin_src bash :noeval
 
@@ -50,7 +48,7 @@ kubectl apply -f webapp-service.yaml
 kubectl apply -f webapp-ingress.yaml
 #+end_src
 
-** Testing
+* Testing
 
 Then, to check that the app is working as expected, we can make HTTP requests to the IP of the minikube VM.
 
