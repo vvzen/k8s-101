@@ -1,0 +1,65 @@
+#+title: README
+
+* Goals
+
+Create a simple webapp that replies something like ~'hello, world from $hostname'~ to GET requests to ~/api/v1/status~.
+
+Where $hostname should be the hostname of the node.
+
+I'll make it a Service with 3 replicas.
+Then I'll add NGINX ingress.
+
+* Prerequisites
+
+I'm running the cluster locally using ~minikube~.
+
+* Building the image
+
+To build the image for the Python webapp, I can run this:
+#+begin_src bash :noeval
+cd services/webapp
+make build
+#+end_src
+
+* Forcing K8s to repull the image
+
+An image is pulled when the pod is created.
+
+Deleting the Pods of my deployment will force Kubernetes to recreate them, and in turn it will pull the image again. So I can run this:
+#+begin_src bash :noeval
+kubectl delete pod -l app=my-app-deployment
+#+end_src
+
+Alternatively, use the ~rollout~ command:
+#+begin_src bash :noeval
+kubectl rollout restart deployment/my-app-deployment
+#+end_src
+
+* Deploying
+
+#+begin_src bash :noeval
+
+# Set the namespace
+kubectl apply -f webapp-namespace.yaml
+kubectl config set-context --current --namespace=my-app-dev
+
+kubectl apply -f webapp-deployment.yaml 
+kubectl apply -f webapp-service.yaml 
+kubectl apply -f webapp-ingress.yaml
+#+end_src
+
+* Testing
+
+Then, to check that the app is working as expected, we can make HTTP requests to the IP of the minikube VM.
+
+For example:
+#+begin_src bash :noeval
+$ minikube ip
+192.168.49.2
+
+$ curl -sSf 192.168.49.2/api/v1/status | jq
+{
+  "message": "hello, world",
+  "host": "my-app-deployment-cbb47646b-n4tdm"
+}
+#+end_src
