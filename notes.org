@@ -47,4 +47,21 @@ kubectl config set-context --current --namespace=my-app-dev
 
 kubectl apply -f webapp-deployment.yaml 
 kubectl apply -f webapp-service.yaml 
+kubectl apply -f webapp-ingress.yaml
+#+end_src
+
+** Testing
+
+Then, to check that the app is working as expected, we can make HTTP requests to the IP of the minikube VM.
+
+For example:
+#+begin_src bash :noeval
+$ minikube ip
+192.168.49.2
+
+$ curl -sSf 192.168.49.2/api/v1/status | jq
+{
+  "message": "hello, world",
+  "host": "my-app-deployment-cbb47646b-n4tdm"
+}
 #+end_src
