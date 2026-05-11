@@ -3,20 +3,20 @@ kind: Deployment
 
 metadata:
   labels:
-    app: my-app
-  name: my-app
+    app: my-app-deployment
+  name: my-app-deployment
 
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: my-app
+      app: my-app-deployment
   strategy: {}
 
   template:
     metadata:
       labels:
-        app: my-app
+        app: my-app-deployment
 
     spec:
       containers:
