@@ -14,6 +14,13 @@ def status():
     }
 
 
+@app.get("/")
+def root():
+    return {
+        "status": "running",
+    }
+
+
 def main():
     print("Hello from webapp!")
 
