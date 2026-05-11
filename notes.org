@@ -1,0 +1,10 @@
+#+title: Notes
+
+* TODO:
+
+Create a simple webapp that replies ~'hello, world from $hostname'~ to GET requests to ~/api/v1/status~.
+Where $hostname should be the hostname of the node.
+
+I'll make it a Service with 3 replicas.
+Then I'll add NGINX ingress.
+
