@@ -1,10 +1,40 @@
 #+title: Notes
 
-* TODO:
+* Goals
 
-Create a simple webapp that replies ~'hello, world from $hostname'~ to GET requests to ~/api/v1/status~.
+Create a simple webapp that replies something like ~'hello, world from $hostname'~ to GET requests to ~/api/v1/status~.
+
 Where $hostname should be the hostname of the node.
 
 I'll make it a Service with 3 replicas.
 Then I'll add NGINX ingress.
 
+* Notes
+
+** Prerequisites
+
+I'm running the cluster locally using ~minikube~.
+
+** Building the image
+
+To build the image for the Python webapp, I can run this:
+#+begin_src bash :noeval
+cd services/webapp
+make build
+#+end_src
+
+** Forcing K8s to repull the image
+
+An image is pulled when the pod is created.
+
+Deleting the Pods of my deployment will force Kubernetes to recreate them, and in turn it will pull the image again. So I can run this:
+#+begin_src bash :noeval
+kubectl delete pod -l app=my-app-deployment
+#+end_src
+
+** Deploying
+
+#+begin_src bash :noeval
+kubectl apply -f webapp-deployment.yaml 
+kubectl apply -f webapp-service.yaml 
+#+end_src
