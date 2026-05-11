@@ -6,5 +6,5 @@ COPY pyproject.toml .
 
 RUN python3 -m pip install .
 
-CMD ["fastapi", "run", "webapp/app.py", "--port", "80"]
+CMD ["fastapi", "run", "webapp/app.py", "--port", "8000"]
 

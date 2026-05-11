@@ -9,5 +9,5 @@ spec:
   selector:
     app: my-app-deployment
   ports:
-    - port: 80
-      targetPort: 80
+    - port: 80  # Port exposed within the cluster
+      targetPort: 8000  # Port on the pods
