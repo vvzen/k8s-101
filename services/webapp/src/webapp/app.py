@@ -8,7 +8,10 @@ app = FastAPI()
 @app.get("/api/v1/status")
 def status():
     hostname = socket.gethostname()
-    return f'hello, world from {hostname}'
+    return {
+        "message": "hello, world",
+        "host": hostname,
+    }
 
 
 def main():
