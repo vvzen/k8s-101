@@ -5,6 +5,6 @@
 # @version 0.1
 
 build:
-	docker build -t my-app-image .
+	./build_image.sh
 
 # end
