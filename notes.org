@@ -32,9 +32,19 @@ Deleting the Pods of my deployment will force Kubernetes to recreate them, and i
 kubectl delete pod -l app=my-app-deployment
 #+end_src
 
+Alternatively, use the ~rollout~ command:
+#+begin_src bash :noeval
+kubectl rollout restart deployment/my-app-deployment
+#+end_src
+
 ** Deploying
 
 #+begin_src bash :noeval
+
+# Set the namespace
+kubectl apply -f webapp-namespace.yaml
+kubectl config set-context --current --namespace=my-app-dev
+
 kubectl apply -f webapp-deployment.yaml 
 kubectl apply -f webapp-service.yaml 
 #+end_src
