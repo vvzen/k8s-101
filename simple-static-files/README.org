@@ -44,7 +44,7 @@ Hello, world
 Now let's update one of the files:
 #+begin_src bash :noeval
 $ echo 'Bonjour le monde' > html/index.html
-
+# Update the config-map
 $ make update-cm
 #+end_src
 
