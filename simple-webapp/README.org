@@ -11,7 +11,12 @@ Then I'll add NGINX ingress.
 
 * Prerequisites
 
-I'm running the cluster locally using ~minikube~.
+I'm running the cluster locally using ~minikube~ (started via ~minikube start~).
+
+I also needed to enable the minikube ingress addon:
+#+begin_src bash :noeval
+minikube addons enable ingress
+#+end_src
 
 * Building the image
 
