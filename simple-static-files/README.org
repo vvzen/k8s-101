@@ -1,0 +1,55 @@
+#+title: Readme
+
+* Goals
+
+Let's say that I want to deploy a static website via kubernetes. The idea itself might not be the brightest, but this is just for learning.
+I should be able to update the content of the website without having to bring my service up or down.
+How would I do it ? A 'dumb' way is via ~ConfigMap~, if I recall correctly the course that I did.
+
+* Prerequisites
+
+I'm running the cluster locally using ~minikube~ (started via ~minikube start~).
+
+I also needed to enable the minikube ingress addon:
+#+begin_src bash :noeval
+minikube addons enable ingress
+#+end_src
+
+* Deploying
+
+#+begin_src bash :noeval
+# Set the namespace
+kubectl apply -f webapp-namespace.yaml
+kubectl config set-context --current --namespace=my-app-dev
+
+# Create the config-map that holds the content of the 'html' directory
+# (see the Makefile for the full command)
+make update-cm
+
+# Spin up all of the services
+kubectl apply -f manifest.yaml
+
+# Start up the service
+minikube service my-static-app-svc
+#+end_src
+
+* Testing
+
+Once the service is running:
+#+begin_src bash :noeval
+$ curl "http://$(minikube ip):80"
+Hello, world
+#+end_src
+
+Now let's update one of the files:
+#+begin_src bash :noeval
+$ echo 'Bonjour le monde' > html/index.html
+
+$ make update-cm
+#+end_src
+
+Now wait a bit of time here.. for me it took around 30s (I'd love to know how to reduce this delay without forcing a re-rollout!)
+#+begin_src bash :noeval
+$ curl "http://$(minikube ip):80"
+Bonjour le monde
+#+end_src
